@@ -1,9 +1,10 @@
-@import '@fontsource/iosevka';
-@import 'tailwindcss';
+@import "@fontsource/iosevka";
+@import "tailwindcss";
+
 @plugin 'daisyui' {
-  themes: night --default;
-};
+    themes: night --default;
+}
 
 body {
-  font-family: 'Iosevka', monospace;
+    font-family: "Iosevka", monospace;
 }
