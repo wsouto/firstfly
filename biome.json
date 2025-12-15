@@ -1,0 +1,67 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!!**/dist",
+      "!!worker-configuration.d.ts"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "lineWidth": 100
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["*.jsonc"],
+      "json": {
+        "parser": {
+          "allowComments": true,
+          "allowTrailingCommas": true
+        }
+      }
+    }
+  ],
+  "extends": [
+    "ultracite/core",
+    "ultracite/astro",
+    "ultracite/react"
+  ]
+}
