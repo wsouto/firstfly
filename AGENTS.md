@@ -4,8 +4,6 @@
 
 - **Build**: `astro build`
 - **Dev server**: `bunx --bun astro dev`
-- **Lint**: `ultracite check`
-- **Fix linting**: `ultracite fix`
 - **Type generation**: `wrangler types`
 - **Deploy**: `astro build && wrangler deploy`
 - **Preview**: `astro build && wrangler dev`
@@ -16,10 +14,8 @@ No test framework configured.
 
 ### Formatting & Linting
 
-- Use Biome for formatting: 2-space indentation, 100 char line width
+- 2-space indentation, 100 char line width
 - Double quotes for JavaScript/TypeScript strings
-- Ultracite rules for core, Astro, and React code
-- Auto-organize imports enabled
 
 ### TypeScript
 

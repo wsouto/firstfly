@@ -18,22 +18,18 @@ Key insight: Components are split between static **Astro** components (`.astro` 
 | **Build** | `astro build` | Outputs to `./dist/`; required before deploy |
 | **Deploy** | `astro build && wrangler deploy` | Builds + deploys to Cloudflare Pages |
 | **Preview locally** | `astro build && wrangler dev` | Test production build before deploying |
-| **Lint** | `ultracite check` | Checks code against Ultracite rules + Biome |
-| **Auto-fix** | `ultracite fix` | Applies linting fixes; organizes imports |
 | **Type generation** | `wrangler types` | Generates Cloudflare Worker types to `worker-configuration.d.ts` |
 
-No test framework is configured—focus on linting and type safety instead.
+No test framework is configured—focus on type safety instead.
 
 ## Code Style & Conventions
 
-- **Formatting**: Biome (2-space indentation, 100-char line width)
+- **Formatting**: 2-space indentation, 100-char line width
 - **Quotes**: Double quotes for all JavaScript/TypeScript strings
 - **Naming**: `camelCase` for variables/functions, `PascalCase` for React/Astro components, `kebab-case` for filenames
 - **Imports**: Relative imports (`../`) for internal modules; external packages first, then internal
 - **TypeScript**: Strict mode enabled (`astro/tsconfigs/strict`), strict null checks required
 - **JSX**: React JSX with `jsxImportSource: "react"` configured in tsconfig
-
-See `biome.json` for formatter rules and `ultracite` configuration for linting strictness.
 
 ## Component Patterns
 
@@ -76,6 +72,3 @@ Access Cloudflare context in server code via `Astro.locals.runtime.env` (require
 
 - **Commit linting**: `commitlint` enforces Conventional Commits (feat, fix, docs, style, refactor, test, chore)
 - **Pre-commit hooks**: Lefthook configured in `lefthook.yml`
-- **Auto-organize imports**: Enabled in Ultracite; redundant imports removed automatically
-
-Always run `ultracite fix` before committing to ensure consistent formatting and no linting violations.
