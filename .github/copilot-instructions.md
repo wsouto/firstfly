@@ -1,22 +1,81 @@
-# Copilot Instructions
-- Project is Astro 5 targeting Cloudflare Workers; source root is set to `src/client` and Cloudflare adapter/image service is configured in [astro.config.mjs](astro.config.mjs#L1-L26).
-- Pages live in [src/client/pages](src/client/pages) and route by filename; current home page composes [Hello](src/client/components/Hello.astro) and [Slogan](src/client/components/Slogan.astro) through the shared [layout](src/client/layouts/layout.astro).
-- Layout pulls in global styles and head metadata; global styles use Tailwind v4 directives, DaisyUI plugin, and Iosevka font declared in [src/client/styles/global.css](src/client/styles/global.css).
-- Tailwind is wired via Vite plugin (no config file needed) and DaisyUI plugin is registered in CSS using `@plugin "daisyui"`.
-- Slogan component instantiates `typed.js` on `#slogan` with looping phrases; ensure any additions keep the DOM id stable or update the selector accordingly.
-- React is available via `@astrojs/react` integration; use React components where needed, but keep Astro pages as the routing surface.
-- TypeScript inherits Astro strict config and adds React JSX settings in [tsconfig.json](tsconfig.json#L1-L17); Wrangler-generated worker types are included via [worker-configuration.d.ts](worker-configuration.d.ts) (do not edit).
-- Cloudflare deploy settings live in [wrangler.jsonc](wrangler.jsonc#L1-L26): compatibility date `2025-12-12`, flags `nodejs_compat` and `global_fetch_strictly_public`, assets binding `ASSETS` served from `./dist`.
-- Package scripts (run with Bun): `bunx --bun astro dev` (dev), `astro build` (build), `astro build && wrangler dev` (preview against local worker), `astro build && wrangler deploy` (deploy), `wrangler types` (update worker-configuration), `ultracite check|fix` (lint/format via Biome presets).
-- Commit messages are linted via Lefthook `commit-msg` hook running `bun run commitlint --edit {1}` per [lefthook.yml](lefthook.yml).
-- Formatting/linting style: Biome with Ultracite presets, 2-space indent, line width 100, double quotes for JS/TS, Tailwind directives enabled in CSS, JSON formatting disabled for `.json` (biome is off there).
-- Font assets and favicons are expected in `public`; manifest is referenced from the layout head.
-- Astro adapter uses Cloudflare platform proxy; images go through Cloudflare image service—prefer using Astro `<Image />`/service-friendly assets when adding media.
-- When adding new environment bindings, configure them in `wrangler.jsonc` (vars/secrets/services) and surface types via regenerated `worker-configuration.d.ts` using `bun run cf-typegen`.
-- Prefer keeping pages lean and moving UI into components under `src/client/components`; share layout-level styles or head tags in the layout instead of per-page duplication.
-- If adding client scripts, prefer Astro islands or React components; if using inline scripts like Slogan, keep selectors unique and avoid polluting global scope.
-- Deployment output is Worker-first; ensure any server-side APIs rely on Cloudflare-compatible APIs (fetch, caches) rather than Node-only modules.
-- Use Bun for dependency tasks; lockfile is `bun.lock` (kept in repo), and `type: module` is set in [package.json](package.json#L1-L29) (use ESM syntax).
- - Dev server runs on http://localhost:4321 by default when using `bunx --bun astro dev`.
- - Worker bundle emitted to `dist/_worker.js/index.js` per [wrangler.jsonc](wrangler.jsonc#L1-L12); avoid manual edits in `dist` (build artifacts).
- - No automated tests are present; smoke-test locally via dev server and `wrangler dev` preview before deploying.
+# Copilot Instructions for FirstFly
+
+## Architecture Overview
+
+**FirstFly** is an Astro-based web application deployed on Cloudflare Pages with Workers backend support. The project uses:
+- **Framework**: Astro 5 with React integration for interactive components
+- **Styling**: TailwindCSS (v4) + DaisyUI for component library
+- **Deployment**: Cloudflare Pages (via Wrangler) with edge runtime capabilities
+- **Source Root**: `src/client/` (configured in astro.config.mjs)
+
+Key insight: Components are split between static **Astro** components (`.astro` files for server-rendered content) and **React** components (for client-side interactivity). See `src/client/components/` and `src/client/pages/index.astro` for examples.
+
+## Essential Commands & Workflows
+
+| Task | Command | Notes |
+|------|---------|-------|
+| **Dev server** | `bunx --bun astro dev` | Runs at `localhost:4321`; watches for changes |
+| **Build** | `astro build` | Outputs to `./dist/`; required before deploy |
+| **Deploy** | `astro build && wrangler deploy` | Builds + deploys to Cloudflare Pages |
+| **Preview locally** | `astro build && wrangler dev` | Test production build before deploying |
+| **Lint** | `ultracite check` | Checks code against Ultracite rules + Biome |
+| **Auto-fix** | `ultracite fix` | Applies linting fixes; organizes imports |
+| **Type generation** | `wrangler types` | Generates Cloudflare Worker types to `worker-configuration.d.ts` |
+
+No test framework is configured—focus on linting and type safety instead.
+
+## Code Style & Conventions
+
+- **Formatting**: Biome (2-space indentation, 100-char line width)
+- **Quotes**: Double quotes for all JavaScript/TypeScript strings
+- **Naming**: `camelCase` for variables/functions, `PascalCase` for React/Astro components, `kebab-case` for filenames
+- **Imports**: Relative imports (`../`) for internal modules; external packages first, then internal
+- **TypeScript**: Strict mode enabled (`astro/tsconfigs/strict`), strict null checks required
+- **JSX**: React JSX with `jsxImportSource: "react"` configured in tsconfig
+
+See `biome.json` for formatter rules and `ultracite` configuration for linting strictness.
+
+## Component Patterns
+
+**Astro Components** (`.astro`) — Server-rendered, zero client JavaScript by default:
+```astro
+---
+// Frontmatter: component logic, imports, server-only code
+import Hello from "../components/Hello.astro";
+---
+
+<!-- Template: HTML-like syntax -->
+<Hello/>
+```
+
+**React Components** (when needed) — Use `client:load` or other directives for hydration:
+```astro
+<ReactComponent client:load />
+```
+
+**Styling**: Apply TailwindCSS classes directly; DaisyUI components available (e.g., `kbd`, `btn`). See `src/client/components/Slogan.astro` for inline `<script>` usage with libraries like `typed.js`.
+
+## Critical Paths & Key Files
+
+- **Pages**: `src/client/pages/index.astro` — Entry point; routes determined by filename
+- **Layouts**: `src/client/layouts/layout.astro` — Wraps page content
+- **Global styles**: `src/client/styles/global.css` — TailwindCSS directives
+- **Build output**: `dist/` → `dist/_worker.js/index.js` (configured in wrangler.jsonc)
+- **Types**: `worker-configuration.d.ts` — Generated Cloudflare types; regenerate with `wrangler types`
+
+## Cloudflare Integration
+
+- **Adapter**: `@astrojs/cloudflare` with `platformProxy` enabled for local development
+- **Image Service**: Cloudflare Images (configured in astro.config.mjs)
+- **Observability**: Enabled in wrangler.jsonc; opt-in at build time
+- **Assets**: Static files from `./dist` bound as `ASSETS` variable
+
+Access Cloudflare context in server code via `Astro.locals.runtime.env` (requires `platformProxy` enabled locally).
+
+## Git & Quality Checks
+
+- **Commit linting**: `commitlint` enforces Conventional Commits (feat, fix, docs, style, refactor, test, chore)
+- **Pre-commit hooks**: Lefthook configured in `lefthook.yml`
+- **Auto-organize imports**: Enabled in Ultracite; redundant imports removed automatically
+
+Always run `ultracite fix` before committing to ensure consistent formatting and no linting violations.
