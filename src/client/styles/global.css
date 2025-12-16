@@ -12,6 +12,7 @@ body {
 }
 
 .dotted-background {
+  overflow: hidden;
   background-image: radial-gradient(circle at center, #333 1px, transparent 1px);
   background-size: 24px 24px; /* Adjust spacing here */
   height: 100vh; /* Example height */
