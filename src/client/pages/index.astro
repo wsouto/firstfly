@@ -1,10 +1,14 @@
 ---
 import Hello from '../components/Hello.astro';
 import Slogan from '../components/Slogan.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
   <Hello />
+  <div class="fixed top-5 right-5">
+    <ThemeToggle />
+  </div>
   <Slogan />
 </Layout>
