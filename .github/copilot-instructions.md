@@ -39,7 +39,7 @@ No test framework is configured—focus on type safety instead.
 ```astro
 ---
 // Frontmatter: component logic, imports, server-only code
-import Hello from "../components/Hello.astro";
+import Hello from '../components/Hello.astro';
 ---
 
 <!-- Template: HTML-like syntax -->

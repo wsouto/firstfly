@@ -44,5 +44,5 @@
 # Validate commit messages
 commit-msg:
   commands:
-    "lint commit message":
+    'lint commit message':
       run: bun run commitlint --edit {1}

@@ -1,8 +1,8 @@
-@import "@fontsource/iosevka";
-@import "tailwindcss";
+@import '@fontsource/iosevka';
+@import 'tailwindcss';
 
-@plugin "daisyui";
+@plugin 'daisyui';
 
 body {
-  font-family: "Iosevka", monospace;
+  font-family: 'Iosevka', monospace;
 }
