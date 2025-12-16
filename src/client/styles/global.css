@@ -10,3 +10,10 @@
 body {
   font-family: 'Iosevka', monospace;
 }
+
+.dotted-background {
+  background-image: radial-gradient(circle at center, #333 1px, transparent 1px);
+  background-size: 24px 24px; /* Adjust spacing here */
+  height: 100vh; /* Example height */
+  width: 100vw; /* Example width */
+}
