@@ -43,10 +43,14 @@
 
 # Lint and format staged files
 pre-commit:
+  parallel: true
   commands:
-    'lint staged files':
-      glob: "*.{js,ts,jsx,tsx,astro,json,css,md}"
+    'lint javascript':
+      glob: '*.{js,ts,jsx,tsx,astro}'
       run: eslint --fix {staged_files}
+    'format styles and markup':
+      glob: '*.{json,css,md}'
+      run: prettier --write {staged_files}
 
 # Validate commit messages
 commit-msg:
