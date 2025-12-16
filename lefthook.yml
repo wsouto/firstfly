@@ -41,6 +41,13 @@
 #     - script: "hello.go"
 #       runner: go run
 
+# Lint and format staged files
+pre-commit:
+  commands:
+    'lint staged files':
+      glob: "*.{js,ts,jsx,tsx,astro,json,css,md}"
+      run: eslint --fix {staged_files}
+
 # Validate commit messages
 commit-msg:
   commands:
