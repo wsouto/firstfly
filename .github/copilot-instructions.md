@@ -3,6 +3,7 @@
 ## Architecture Overview
 
 **FirstFly** is an Astro-based web application deployed on Cloudflare Pages with Workers backend support. The project uses:
+
 - **Framework**: Astro 5 with React integration for interactive components
 - **Styling**: TailwindCSS (v4) + DaisyUI for component library
 - **Deployment**: Cloudflare Pages (via Wrangler) with edge runtime capabilities
@@ -12,13 +13,13 @@ Key insight: Components are split between static **Astro** components (`.astro` 
 
 ## Essential Commands & Workflows
 
-| Task | Command | Notes |
-|------|---------|-------|
-| **Dev server** | `bunx --bun astro dev` | Runs at `localhost:4321`; watches for changes |
-| **Build** | `astro build` | Outputs to `./dist/`; required before deploy |
-| **Deploy** | `astro build && wrangler deploy` | Builds + deploys to Cloudflare Pages |
-| **Preview locally** | `astro build && wrangler dev` | Test production build before deploying |
-| **Type generation** | `wrangler types` | Generates Cloudflare Worker types to `worker-configuration.d.ts` |
+| Task                | Command                          | Notes                                                            |
+| ------------------- | -------------------------------- | ---------------------------------------------------------------- |
+| **Dev server**      | `bunx --bun astro dev`           | Runs at `localhost:4321`; watches for changes                    |
+| **Build**           | `astro build`                    | Outputs to `./dist/`; required before deploy                     |
+| **Deploy**          | `astro build && wrangler deploy` | Builds + deploys to Cloudflare Pages                             |
+| **Preview locally** | `astro build && wrangler dev`    | Test production build before deploying                           |
+| **Type generation** | `wrangler types`                 | Generates Cloudflare Worker types to `worker-configuration.d.ts` |
 
 No test framework is configured—focus on type safety instead.
 
@@ -34,6 +35,7 @@ No test framework is configured—focus on type safety instead.
 ## Component Patterns
 
 **Astro Components** (`.astro`) — Server-rendered, zero client JavaScript by default:
+
 ```astro
 ---
 // Frontmatter: component logic, imports, server-only code
@@ -41,10 +43,11 @@ import Hello from "../components/Hello.astro";
 ---
 
 <!-- Template: HTML-like syntax -->
-<Hello/>
+<Hello />
 ```
 
 **React Components** (when needed) — Use `client:load` or other directives for hydration:
+
 ```astro
 <ReactComponent client:load />
 ```
