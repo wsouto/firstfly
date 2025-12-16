@@ -17,7 +17,7 @@ No test framework configured.
 ### Formatting & Linting
 
 - 2-space indentation, 100 char line width
-- Double quotes for JavaScript/TypeScript strings
+- Single quotes for JavaScript/TypeScript strings (double quotes in JSX)
 
 ### TypeScript
 
