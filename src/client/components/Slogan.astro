@@ -1,21 +1,14 @@
+---
+import Typewriter from 'astro-typewriter';
+---
+
 <div class="flex min-h-screen items-center justify-center text-center">
-  <span id="slogan"></span>
-</div>
-
-<script>
-  import Typed from 'typed.js';
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const typed = new Typed('#slogan', {
-    strings: [
+  <Typewriter
+    messages={[
       'Simply pragmatic.',
       'Effortlessly efficient.',
       'Code with clarity.',
       'Design with purpose.',
-    ],
-    typeSpeed: 50,
-    backSpeed: 25,
-    loop: true,
-    backDelay: 1000,
-  });
-</script>
+    ]}
+  />
+</div>
