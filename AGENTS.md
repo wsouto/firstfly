@@ -4,9 +4,11 @@
 
 - **Build**: `astro build`
 - **Dev server**: `bunx --bun astro dev`
-- **Type generation**: `wrangler types`
-- **Deploy**: `astro build && wrangler deploy`
-- **Preview**: `astro build && wrangler dev`
+- **Type generation**: `wrangler types` (or `bun run cf-typegen`)
+- **Deploy**: `astro build && wrangler deploy` (or `bun run deploy`)
+- **Preview**: `astro build && wrangler dev` (or `bun run preview`)
+- **Lint**: `bun run lint` (check) or `bun run lint:fix` (auto-fix)
+- **Format**: `bun run format` (check) or `bun run format:fix` (auto-fix)
 
 No test framework configured.
 
@@ -43,6 +45,8 @@ No test framework configured.
 ### Architecture
 
 - Astro framework with React integration
-- TailwindCSS for styling
-- Cloudflare Pages deployment
+- TailwindCSS v4 for styling (with daisyUI v5)
+- Cloudflare Pages deployment with platform proxy enabled
+- Cloudflare image service for optimized images
 - Source directory: `src/client/`
+- Dev tools: ESLint, Prettier, Commitizen, Lefthook, lint-staged
