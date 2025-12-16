@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 
 export default [
-  // 🚫 Ignore build output
+  // Ignore build output
   {
     ignores: ['dist/**', '.astro/**'],
   },
