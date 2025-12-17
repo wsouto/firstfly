@@ -43,6 +43,18 @@ Open `http://localhost:3000` in your browser. If you see the Astro app, your env
 - **Lint**: `bun run lint` (check) or `bun run lint:fix` (auto-fix)
 - **Format**: `bun run format` (check) or `bun run format:fix` (auto-fix)
 
+### Available Scripts (from package.json)
+
+- `bun run dev`: Starts the Astro development server.
+- `bun run build`: Builds the project for production.
+- `bun run preview`: Builds and previews with Wrangler.
+- `bun run deploy`: Builds and deploys to Cloudflare.
+- `bun run cf-typegen`: Generates Cloudflare Worker types.
+- `bun run format`: Checks code formatting with Prettier.
+- `bun run format:fix`: Fixes code formatting with Prettier.
+- `bun run lint`: Runs ESLint on source files.
+- `bun run lint:fix`: Runs ESLint with auto-fix on source files.
+
 No test framework configured.
 
 ---
@@ -55,14 +67,17 @@ No test framework configured.
 - Single quotes for JavaScript/TypeScript strings (`" "` reserved for JSX).
 - Enforced via:
   - `.editorconfig` (line endings, indentation)
-  - `.eslintrc` (linting rules)
-  - `prettier.config.js` (auto-formatting)
+  - `eslint.config.js` (linting rules)
+  - `.prettierrc` (auto-formatting)
+  - `lefthook.yml` (git hooks)
+  - `lint-staged` (pre-commit linting and formatting)
 
 ### TypeScript
 
 - Strict mode (`astro/tsconfigs/strict`).
 - `strictNullChecks: true`.
 - React JSX: `jsxImportSource: "react"` (see `tsconfig.json`).
+- Custom worker types via `worker-configuration.d.ts` for Cloudflare compatibility.
 
 ### Naming Conventions
 
@@ -89,13 +104,46 @@ No test framework configured.
 - Styling: TailwindCSS v4 + daisyUI v5.
 - Deployment: Cloudflare Pages (proxy enabled) + Cloudflare Images.
 - Source directory: `src/client/` (client code only).
-- Dev tools: ESLint, Prettier, Commitizen, Lefthook, lint-staged.
+- Dev tools: ESLint, Prettier, Commitlint, Lefthook, lint-staged.
+- Configuration files: `eslint.config.js`, `.prettierrc`, `lefthook.yml`, `wrangler.jsonc`.
+
+---
+
+## Git Hooks
+
+- **Lefthook** is used for managing git hooks (configured in `lefthook.yml`).
+- **lint-staged** runs linters and formatters on staged files before commits.
+- Commits are automatically formatted and linted before being allowed.
+
+---
+
+## Project Structure
+
+```
+firstfly/
+├── .husky/                 # Git hooks
+├── .vscode/                # VSCode settings
+├── .wrangler/              # Wrangler-generated files
+├── public/                 # Static assets
+├── src/
+│   ├── client/             # Source code (Astro pages, components, etc.)
+│   └── env.d.ts            # TypeScript environment declarations
+├── astro.config.mjs        # Astro configuration
+├── eslint.config.js        # ESLint rules
+├── lefthook.yml            # Git hooks configuration
+├── package.json            # Project dependencies and scripts
+├── prettierrc              # Prettier configuration
+├── tsconfig.json           # TypeScript configuration
+├── worker-configuration.d.ts  # Cloudflare Workers types
+└── wrangler.jsonc          # Cloudflare Wrangler configuration
+```
 
 ---
 
 ## Cloudflare & Secrets
 
-- Configure secrets in `wrangler.toml` or the [Cloudflare Dashboard](https://dash.cloudflare.com/).
+- Configure secrets in `wrangler.jsonc` or the [Cloudflare Dashboard](https://dash.cloudflare.com/).
 - Environment variables are loaded at runtime during deployment.
+- Custom worker configuration defined in `worker-configuration.d.ts`.
 
 ---
