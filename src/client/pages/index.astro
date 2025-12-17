@@ -1,16 +1,18 @@
 ---
 import Hello from '../components/Hello.astro';
+import { SignUp } from '../components/SignUp';
 import Slogan from '../components/Slogan.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-  <div class="p-8">
+  <main class="flex min-h-dvh flex-col">
     <Hello />
-  </div>
-  <div class="fixed top-8 right-8">
     <ThemeToggle />
-  </div>
-  <Slogan />
+    <div class="flex flex-1 flex-col items-center justify-center gap-10 text-center">
+      <Slogan />
+      <SignUp />
+    </div>
+  </main>
 </Layout>

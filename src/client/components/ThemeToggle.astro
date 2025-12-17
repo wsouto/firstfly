@@ -2,10 +2,12 @@
 import { Sun, Moon } from '@lucide/astro';
 ---
 
-<label class="swap swap-rotate">
-  <!-- this hidden checkbox controls the state -->
-  <input type="checkbox" class="theme-controller" value="light" />
-  <!-- icons -->
-  <Sun class="swap-off" />
-  <Moon class="swap-on" />
-</label>
+<div class="fixed top-8 right-8">
+  <label class="swap swap-rotate">
+    <!-- this hidden checkbox controls the state -->
+    <input type="checkbox" class="theme-controller" value="light" />
+    <!-- icons -->
+    <Sun class="swap-off" />
+    <Moon class="swap-on" />
+  </label>
+</div>
