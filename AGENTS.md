@@ -35,7 +35,7 @@ Open `http://localhost:3000` in your browser. If you see the Astro app, your env
 
 ## Build / Dev / Deploy Commands
 
-- **Build**: `astro build`
+- **Build**: `bunx --bun astro build`
 - **Dev server**: `bunx --bun astro dev`
 - **Type generation**: `wrangler types` (or `bun run cf-typegen`)
 - **Deploy**: `astro build && wrangler deploy` (or `bun run deploy`)
@@ -121,7 +121,6 @@ No test framework configured.
 
 ```
 firstfly/
-├── .husky/                 # Git hooks
 ├── .vscode/                # VSCode settings
 ├── .wrangler/              # Wrangler-generated files
 ├── public/                 # Static assets
@@ -142,7 +141,8 @@ firstfly/
 
 ## Cloudflare & Secrets
 
-- Configure secrets in `wrangler.jsonc` or the [Cloudflare Dashboard](https://dash.cloudflare.com/).
+- Configure environment variables in `wrangler.jsonc`.
+- Configure secrets (sensitive data) in the [Cloudflare Dashboard](https://dash.cloudflare.com/) or via `wrangler secret put`.
 - Environment variables are loaded at runtime during deployment.
 - Custom worker configuration defined in `worker-configuration.d.ts`.
 
