@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 export const Status = () => {
   const [status, setStatus] = useState('loading...');
-  const API = 'http://localhost:8787';
+  // const API = 'http://localhost:8787';
 
   useEffect(() => {
-    fetch(`${API}/api/health`)
+    fetch('/api/health')
       .then((res) => res.json())
       .then((data) => setStatus(data as string))
       .catch(() => setStatus('Error fetching status'));
