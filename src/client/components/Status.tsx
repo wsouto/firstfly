@@ -4,7 +4,6 @@ export const Status = () => {
   const [status, setStatus] = useState('loading...');
 
   useEffect(() => {
-    // fetch(`${base}/api/health`)
     fetch('/api/health')
       .then((res) => res.json())
       .then((data) => setStatus(data as string))
@@ -14,7 +13,7 @@ export const Status = () => {
   return (
     <div>
       <h1>
-        Server Status: <span className="bg-gray-300 p-1 text-black">{status}</span>
+        Server Status: <span className="blink bg-gray-300 p-1 text-black">{status}</span>
       </h1>
     </div>
   );

@@ -10,3 +10,13 @@
 body {
   font-family: 'Iosevka', monospace;
 }
+
+@keyframes blink {
+  50% {
+    opacity: 10%;
+  }
+}
+
+.blink {
+  animation: blink 2s step-start infinite;
+}
