@@ -12,13 +12,17 @@
 
 1. Install **Bun** from [bun.sh](https://bun.sh/).
 2. Install dependencies:
+
    ```sh
    bun install
    ```
+
 3. Generate TypeScript types (required for Cloudflare Workers compatibility):
+
    ```sh
    wrangler types
    ```
+
    (or use the Bun alternative: `bun run cf-typegen`)
 
 ### Verify Installation
@@ -35,21 +39,27 @@ Open `http://localhost:3000` in your browser. If you see the Astro app, your env
 
 ## Build / Dev / Deploy Commands
 
-- **Build**: `bunx --bun astro build`
-- **Dev server**: `bunx --bun astro dev`
-- **Type generation**: `wrangler types` (or `bun run cf-typegen`)
-- **Deploy**: `astro build && wrangler deploy` (or `bun run deploy`)
-- **Preview**: `astro build && wrangler dev` (or `bun run preview`)
+- **Build**: `bun run build:client`
+- **Dev server**: `bun run dev` (starts both client and worker concurrently)
+- **Type generation**: `wrangler types` (or `bun run typegen`)
+- **Deploy**: `bun run deploy` (or `bun run deploy:staging`, `bun run deploy:prod`)
+- **Preview**: `bun run preview`
 - **Lint**: `bun run lint` (check) or `bun run lint:fix` (auto-fix)
 - **Format**: `bun run format` (check) or `bun run format:fix` (auto-fix)
 
 ### Available Scripts (from package.json)
 
-- `bun run dev`: Starts the Astro development server.
-- `bun run build`: Builds the project for production.
+- `bun run dev`: Starts both client (Astro) and worker (Wrangler) servers concurrently.
+- `bun run client`: Starts the Astro development server.
+- `bun run worker`: Starts the Wrangler development server.
+- `bun run build:client`: Builds the client for production.
 - `bun run preview`: Builds and previews with Wrangler.
 - `bun run deploy`: Builds and deploys to Cloudflare.
-- `bun run cf-typegen`: Generates Cloudflare Worker types.
+- `bun run deploy:staging`: Builds and deploys to staging environment.
+- `bun run deploy:prod`: Builds and deploys to production environment.
+- `bun run dryrun:staging`: Dry run deploy to staging.
+- `bun run dryrun:prod`: Dry run deploy to production.
+- `bun run typegen`: Generates Cloudflare Worker types.
 - `bun run format`: Checks code formatting with Prettier.
 - `bun run format:fix`: Fixes code formatting with Prettier.
 - `bun run lint`: Runs ESLint on source files.
@@ -100,38 +110,53 @@ No test framework configured.
 
 ## Architecture
 
-- Framework: Astro + React.
+- Framework: Astro + React + Hono (server-side).
 - Styling: TailwindCSS v4 + daisyUI v5.
-- Deployment: Cloudflare Pages (proxy enabled) + Cloudflare Images.
-- Source directory: `src/client/` (client code only).
-- Dev tools: ESLint, Prettier, Commitlint, Lefthook, lint-staged.
-- Configuration files: `eslint.config.js`, `.prettierrc`, `lefthook.yml`, `wrangler.jsonc`.
+- Deployment: Cloudflare Pages (proxy enabled) + Cloudflare Images + Cloudflare Workers.
+- Source directories: `src/client/` (client code), `src/server/` (server-side API with Hono).
+- Dev tools: ESLint, Prettier, Commitlint, Lefthook, lint-staged, Husky.
+- Configuration files: `eslint.config.js`, `.prettierrc`, `lefthook.yml`, `wrangler.jsonc`, `commitlint.config.js`.
 
 ---
 
 ## Git Hooks
 
-- **Lefthook** is used for managing git hooks (configured in `lefthook.yml`).
+- **Husky** is used for installing git hooks, with **Lefthook** managing the hook logic (configured in `lefthook.yml` and `.husky/_/`).
 - **lint-staged** runs linters and formatters on staged files before commits.
-- Commits are automatically formatted and linted before being allowed.
+- Commits are automatically formatted, linted, and validated before being allowed.
 
 ---
 
 ## Project Structure
 
-```
+```text
 firstfly/
+├── .github/                # GitHub-specific files and instructions
+├── .husky/                 # Husky git hooks
 ├── .vscode/                # VSCode settings
 ├── .wrangler/              # Wrangler-generated files
 ├── public/                 # Static assets
 ├── src/
-│   ├── client/             # Source code (Astro pages, components, etc.)
+│   ├── client/             # Client-side source code
+│   │   ├── components/     # React components
+│   │   ├── layouts/        # Astro layouts
+│   │   └── pages/          # Astro pages
+│   ├── server/             # Server-side API code (Hono)
+│   │   ├── middleware/     # Server middleware
+│   │   └── index.ts        # Main server file
 │   └── env.d.ts            # TypeScript environment declarations
+├── .editorconfig           # Editor configuration
+├── .prettierignore         # Prettier ignore patterns
+├── .prettierrc             # Prettier configuration
+├── AGENTS.md               # This file
 ├── astro.config.mjs        # Astro configuration
+├── bun.lock                # Bun lockfile
+├── commitlint.config.js    # Commitlint configuration
 ├── eslint.config.js        # ESLint rules
-├── lefthook.yml            # Git hooks configuration
+├── lefthook.yml            # Lefthook configuration
+├── package-lock.json       # NPM lockfile
 ├── package.json            # Project dependencies and scripts
-├── prettierrc              # Prettier configuration
+├── README.md               # Project README
 ├── tsconfig.json           # TypeScript configuration
 ├── worker-configuration.d.ts  # Cloudflare Workers types
 └── wrangler.jsonc          # Cloudflare Wrangler configuration
