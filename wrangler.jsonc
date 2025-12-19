@@ -6,16 +6,30 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "firstfly",
   // "main": "./dist/_worker.js/index.js",
-  "main": "./src/server/index.ts",
   "compatibility_date": "2025-12-18",
   "compatibility_flags": [
     "nodejs_compat",
     "global_fetch_strictly_public"
   ],
-  // "assets": {
-  //   "binding": "ASSETS",
-  //   "directory": "./dist",
-  // },
+  "main": "./src/server/index.ts",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+  },
+  "env": {
+    "staging": {
+      "vars": {
+        "ENVIRONMENT": "staging",
+        "POLICY_AUD": "27062893fcb8d224bd46753b109967b79ebf403a1acd3c3ac90cfc35d0e9a126",
+        "CF_ACCESS_DOMAIN": "https://2hm.cloudflareaccess.com"
+      }
+    },
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production"
+      }
+    }
+  },
   "observability": {
     "enabled": true,
   },
