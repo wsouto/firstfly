@@ -13,9 +13,9 @@ export const Status = () => {
   return (
     <div>
       <h1>
-        Server Status:{' '}
+        API Status:{' '}
         <span
-          className={`blink ${status === 'healthy' ? 'bg-red-500' : 'bg-green-500'} p-1 text-black`}
+          className={`blink p-1 text-gray-900 ${status === 'Healthy' ? 'bg-green-500' : 'bg-red-500'}`}
         >
           {status}
         </span>
