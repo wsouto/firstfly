@@ -13,7 +13,12 @@ export const Status = () => {
   return (
     <div>
       <h1>
-        Server Status: <span className="blink bg-gray-300 p-1 text-black">{status}</span>
+        Server Status:{' '}
+        <span
+          className={`blink ${status === 'healthy' ? 'bg-red-500' : 'bg-green-500'} p-1 text-black`}
+        >
+          {status}
+        </span>
       </h1>
     </div>
   );
