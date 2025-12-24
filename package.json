@@ -22,7 +22,9 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply firstfly-local-db --local",
     "db:migrate:staging": "wrangler d1 migrations apply firstfly-staging-db --remote --env staging",
-    "db:migrate:prod": "wrangler d1 migrations apply firstfly-prod-db --remote --env production"
+    "create:test:db": "bun run ./scripts/create-test-db.ts",
+    "destroy:test:db": "bun run ./scripts/destroy-test-db.ts",
+    "test": "bun run create:test:db && bun test && bun run destroy:test:db"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",
@@ -54,6 +56,7 @@
     "astro-eslint-parser": "^1.2.2",
     "daisyui": "^5.5.14",
     "drizzle-kit": "^0.31.8",
+    "drizzle-seed": "^0.3.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
