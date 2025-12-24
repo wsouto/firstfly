@@ -3,75 +3,81 @@
  * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "firstfly",
-  // "main": "./dist/_worker.js/index.js",
-  "compatibility_date": "2025-12-18",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  "main": "./src/server/index.ts",
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "./dist"
-  },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "firstfly-local-db",
-      "database_id": "00000000-0000-0000-0000-000000000000"
-    }
-  ],
-  "env": {
-    "staging": {
-      "vars": {
-        "ENVIRONMENT": "staging",
-        "POLICY_AUD": "27062893fcb8d224bd46753b109967b79ebf403a1acd3c3ac90cfc35d0e9a126",
-        "CF_ACCESS_DOMAIN": "https://2hm.cloudflareaccess.com"
-      },
-      "d1_databases": [
-        {
-          "binding": "DB",
-          "database_name": "firstfly-staging-db",
-          "database_id": "0068a625-e24f-4bc3-882c-579ff970c559"
-        }
-      ]
-    },
-    "production": {
-      "vars": {
-        "ENVIRONMENT": "production"
-      }
-    }
-  },
-  "observability": {
-    "enabled": true
-  }
-  /**
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "firstfly",
+	// "main": "./dist/_worker.js/index.js",
+	"compatibility_date": "2025-12-18",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"main": "./src/server/index.ts",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "firstfly-local-db",
+			"database_id": "00000000-0000-0000-0000-000000000000",
+			"migrations_dir": "./src/server/db/migrations"
+		},
+	],
+	"env": {
+		"staging": {
+			"vars": {
+				"ENVIRONMENT": "staging",
+				"POLICY_AUD": "27062893fcb8d224bd46753b109967b79ebf403a1acd3c3ac90cfc35d0e9a126",
+				"CF_ACCESS_DOMAIN": "https://2hm.cloudflareaccess.com"
+			},
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "firstfly-staging-db",
+					"database_id": "0f05105f-7616-4bf1-b22a-c85e4c6e3c22",
+					"migrations_dir": "./src/server/db/migrations",
+					"remote": true
+				}
+			]
+		},
+		"production": {
+			"vars": {
+				"ENVIRONMENT": "production"
+			}
+		}
+	},
+	"observability": {
+		"enabled": true
+	}
+	/**
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
    */
-  // "placement": { "mode": "smart" }
-  /**
+	// "placement": { "mode": "smart" }
+	/**
    * Bindings
    * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
    * databases, object storage, AI inference, real-time communication and more.
    * https://developers.cloudflare.com/workers/runtime-apis/bindings/
    */
-  /**
+	/**
    * Environment Variables
    * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
    */
-  // "vars": { "MY_VARIABLE": "production_value" }
-  /**
+	// "vars": { "MY_VARIABLE": "production_value" }
+	/**
    * Note: Use secrets to store sensitive data.
    * https://developers.cloudflare.com/workers/configuration/secrets/
    */
-  /**
+	/**
    * Static Assets
    * https://developers.cloudflare.com/workers/static-assets/binding/
    */
-  // "assets": { "directory": "./public/", "binding": "ASSETS" }
-  /**
+	// "assets": { "directory": "./public/", "binding": "ASSETS" }
+	/**
    * Service Bindings (communicate between multiple Workers)
    * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
    */
-  // "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
+	// "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
 }

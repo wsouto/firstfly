@@ -1,5 +1,9 @@
 # Agent Guidelines for FirstFly
 
+## Description
+
+This a waitlist application. It's a lightweight system used to collect, manage, and prioritize users who want access to a product, service, event, or feature that is not yet fully available. Its main goal is to capture demand, control rollout, and communicate status to users while capacity is limited.
+
 ## Setup & Dependencies
 
 ### Prerequisites
