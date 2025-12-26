@@ -16,9 +16,9 @@ call_lefthook()
   elif lefthook -h >/dev/null 2>&1
   then
     lefthook "$@"
-  elif /home/wsouto/Projects/firstfly/node_modules/lefthook-linux-x64/bin/lefthook -h >/dev/null 2>&1
+  elif /home/wsouto/Projects/firstfly/exp-01/node_modules/lefthook-linux-x64/bin/lefthook -h >/dev/null 2>&1
   then
-    /home/wsouto/Projects/firstfly/node_modules/lefthook-linux-x64/bin/lefthook "$@"
+    /home/wsouto/Projects/firstfly/exp-01/node_modules/lefthook-linux-x64/bin/lefthook "$@"
   else
     dir="$(git rev-parse --show-toplevel)"
     osArch=$(uname | tr '[:upper:]' '[:lower:]')
